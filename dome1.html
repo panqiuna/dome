@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>calendar</title>
+    <style type="text/css">
+        #data {
+            width: 400px;
+            height: 300px;
+            background: #7effd4;
+            margin: 0 auto;
+        }
+
+        .tb {
+            width: 400px;
+            height: 300px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<script type="text/javascript">
+    //利用循环嵌套
+    //缓存星期
+    var weeks = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+    //缓存月
+    var months = [1, 2, 3, 4, 56, 7, 8, 9, 10, 11, 12];
+    //缓存天
+    var days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+    var date = new Date();//实例化一个date
+    var currentDay = date.getDate();//天
+    var year = date.getFullYear();//年
+    //得到月份
+    var month = date.getMonth();
+    //设置号
+    date.setDate(1);
+    //天数
+    var week = date.getDate();
+    //
+    var mouthDays;
+    //设置月的星期
+    var rows = Math.floor((week + days[month] + 6) / 7)
+    var yearFlag = 0;//状态
+    //标识状态
+    var f = 1;
+    //判断是否是闰年
+    if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+        yeaeFlaag = 1
+    } else {
+        yeaeFlaag = 0
+    }
+    if (month == 1) {
+        mouthDays = days[month] + yearFlag
+    } else {
+        mouthDays = days[month];
+    }
+    //利用字符串拼接
+    document.write("<div id='data'><table class='tb'>");
+    document.write("<tr>")
+    for (var index in weeks) {//遍历星期
+        document.write("<th>" + weeks[index] + "</th>")
+    }
+        //循环每一行星期
+    for (var i = 0; i < rows; i++) {
+        document.write("<tr>")
+        //循环每一行最多是7天
+        for (var j = 0; j < 7; j++) {
+            //判断是否是小于7
+            if (i == 0 && j < week) {
+                document.write("<td>")
+
+            } else {
+                if (f > mouthDays) {
+                    break;//终止
+                }
+                //f 当前的天数
+                document.write("<td id=" + f + ">" + f)
+                //判断是否是本地当前的天数
+                if (f == currentDay) {
+                    document.getElementById(f).style.backgroundColor = "red"
+                }
+                f++;//累计
+            }
+            document.write("</td>")
+
+        }
+        document.write("</tr>")
+    }
+    document.write("</tr>")
+
+    document.write("</table></div>")
+
+</script>
+</body>
+</html>
